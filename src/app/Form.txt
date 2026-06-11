@@ -1,0 +1,95 @@
+src
+│
+├── app
+│   │
+│   ├── page.js
+│   │
+│   ├── auth
+│   │   ├── login
+│   │   │   └── page.js
+│   │   └── register
+│   │       └── page.js
+│   │
+│   ├── manga
+│   │   └── [id]
+│   │       └── page.js
+│   │
+│   ├── chapter
+│   │   └── [id]
+│   │       └── page.js
+│   │
+│   ├── favorite
+│   │   └── page.js
+│   │
+│   ├── author
+│   │   ├── page.js
+│   │   ├── mangas
+│   │   └── chapters
+│   │
+│   ├── admin
+│   │   ├── page.js
+│   │   ├── mangas
+│   │   ├── categories
+│   │   ├── users
+│   │   └── author-requests
+│   │
+│   ├── layout.js
+│   └── globals.css
+│
+├── components
+│   │
+│   ├── Layout
+│   │   ├── Header.js
+│   │   ├── Footer.js
+│   │   └── Sidebar.js
+│   │
+│   ├── Manga
+│   │   ├── MangaCard.js
+│   │   ├── MangaList.js
+│   │   └── MangaDetail.js
+│   │
+│   ├── Chapter
+│   │   ├── ChapterCard.js
+│   │   └── ChapterList.js
+│   │
+│   ├── Rating
+│   │   └── RatingStar.js
+│   │
+│   ├── Favorite
+│   │   └── FavoriteButton.js
+│   │
+│   └── Common
+│       ├── Loading.js
+│       ├── Empty.js
+│       └── NotFound.js
+│
+├── services
+│   │
+│   ├── axiosClient.js
+│   │
+│   ├── authApi.js
+│   ├── mangaApi.js
+│   ├── chapterApi.js
+│   ├── categoryApi.js
+│   ├── favoriteApi.js
+│   ├── ratingApi.js
+│   └── authorApi.js
+│
+├── contexts
+│   │
+│   └── AuthContext.js
+│
+├── hooks
+│   │
+│   ├── useAuth.js
+│   └── useAxios.js
+│
+├── utils
+│   │
+│   ├── constants.js
+│   ├── storage.js
+│   └── formatDate.js
+│
+└── assets
+    ├── images
+    └── icons

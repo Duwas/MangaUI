@@ -1,33 +1,21 @@
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import AppLayout from "@/app/components/Layout/AppLayout";
-// import Footer from "@/components/Layout/Footer";
+import { Inter } from 'next/font/google';
+import './globals.css';
+import AntdProvider from './AntdProvider';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const inter = Inter({ subsets: ['latin', 'vietnamese'] });
 
 export const metadata = {
-  title: "Comic Website",
-  description: "Manga Reading Website",
+  title: 'ComicVerse - Đọc Truyện Tranh Online',
+  description: 'Nền tảng đọc truyện tranh trực tuyến hàng đầu. Manga, Manhwa, Manhua cập nhật liên tục mỗi ngày.',
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html
-      lang="vi"
-      className={`${geistSans.variable} ${geistMono.variable}`}
-    >
-      <body>
-        <AppLayout>
+    <html lang="vi">
+      <body className={inter.className}>
+        <AntdProvider>
           {children}
-        </AppLayout>
+        </AntdProvider>
       </body>
     </html>
   );

@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Header from "@/app/components/Layout/Header";
-import RegisterModal from "@/app/components/RegisterModal";
+import Header from "@/components/layout/Header";
+import RegisterModal from "@/components/auth/RegisterModal";
 
 export default function AppLayout({ children }) {
 

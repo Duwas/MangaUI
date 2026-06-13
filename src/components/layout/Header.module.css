@@ -11,7 +11,12 @@
   z-index: var(--z-fixed);
   transition: background var(--transition-base);
 }
-
+.logoImage {
+  width: 60px;;
+  height: 60px;
+  object-fit: contain;
+  border-radius: 50%;
+}
 .container {
   max-width: var(--container-max);
   height: 100%;

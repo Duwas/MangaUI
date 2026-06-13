@@ -1,0 +1,15 @@
+.sidebar { position: sticky; top: 80px; }
+.section { background: var(--bg-surface); border-radius: var(--radius-lg); padding: 20px; border: 1px solid var(--border-color); }
+.sectionTitle { font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.rankList { display: flex; flex-direction: column; gap: 2px; }
+.rankItem { display: flex; align-items: center; gap: 10px; padding: 8px 6px; border-radius: var(--radius-sm); transition: background var(--transition-fast); text-decoration: none; }
+.rankItem:hover { background: var(--bg-surface-light); }
+.rankNum { font-size: 15px; font-weight: 800; min-width: 24px; text-align: center; color: var(--text-muted); }
+.top1 { color: #FFD700 !important; }
+.top2 { color: #C0C0C0 !important; }
+.top3 { color: #CD7F32 !important; }
+.rankCover { width: 40px; height: 54px; border-radius: 4px; object-fit: cover; flex-shrink: 0; }
+.rankInfo { flex: 1; min-width: 0; }
+.rankTitle { font-size: 13px; font-weight: 600; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0; }
+.rankViews { font-size: 11px; color: var(--text-muted); display: flex; align-items: center; gap: 4px; }
+@media (max-width: 992px) { .sidebar { display: none; } }

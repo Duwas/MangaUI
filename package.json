@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@ant-design/icons": "^6.2.5",
+    "@fortawesome/free-solid-svg-icons": "^7.2.0",
+    "@fortawesome/react-fontawesome": "^3.3.1",
     "antd": "^6.4.3",
     "axios": "^1.17.0",
     "next": "16.2.9",

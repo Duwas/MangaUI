@@ -19,8 +19,6 @@ export default function RegisterModal({ open, onClose, onSwitchToLogin }) {
         password: values.password,
         confirmPassword: values.confirmPassword,
       });
-
-      message.success("Đăng ký thành công");
       form.resetFields();
       onClose();
     } catch (error) {

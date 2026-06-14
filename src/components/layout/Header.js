@@ -18,9 +18,11 @@ import {
   EditOutlined,
   CloseOutlined,
 } from "@ant-design/icons";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "@/contexts/AuthContext";
 import styles from "./Header.module.css";
+import { useRouter } from "next/navigation";
 
 const navItems = [
   { key: "/", label: "Trang Chủ", icon: <HomeOutlined /> },
@@ -30,6 +32,7 @@ const navItems = [
 
 export default function Header({ onSidebarClick, onLoginClick, onRegisterClick }) {
   const pathname = usePathname();
+  const router = useRouter();
   const { user, isLoggedIn, logout } = useAuth();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -37,44 +40,48 @@ export default function Header({ onSidebarClick, onLoginClick, onRegisterClick }
   const role = user?.role?.toUpperCase();
 
   const userMenuItems = [
-    {
-      key: "profile",
-      label: <Link href="/profile">Hồ sơ cá nhân</Link>,
-      icon: <UserOutlined />,
-    },
-    {
-      key: "favorite",
-      label: <Link href="/favorite">Truyện yêu thích</Link>,
-      icon: <HeartOutlined />,
-    },
-    ...(role === "AUTHOR" || role === "ADMIN"
-      ? [
-          { type: "divider" },
-          {
-            key: "author",
-            label: <Link href="/author">Quản lý truyện</Link>,
-            icon: <EditOutlined />,
-          },
-        ]
-      : []),
-    ...(role === "ADMIN"
-      ? [
-          {
-            key: "admin",
-            label: <Link href="/admin">Quản trị hệ thống</Link>,
-            icon: <CrownOutlined />,
-          },
-        ]
-      : []),
-    { type: "divider" },
-    {
-      key: "logout",
-      label: "Đăng xuất",
-      icon: <LogoutOutlined />,
-      danger: true,
-      onClick: logout,
-    },
-  ];
+        {
+          key: "profile",
+          label: "Hồ sơ cá nhân",
+          icon: <UserOutlined />,
+        },
+
+        {
+          key: "favorite",
+          label: <Link href="/favorite">Truyện yêu thích</Link>,
+          icon: <HeartOutlined />,
+        },
+
+        ...(role === "AUTHOR" || role === "ADMIN"
+          ? [
+              { type: "divider" },
+              {
+                key: "author",
+                label: <Link href="/author">Quản lý truyện</Link>,
+                icon: <EditOutlined />,
+              },
+            ]
+          : []),
+
+        ...(role === "ADMIN"
+          ? [
+              {
+                key: "admin",
+                label: <Link href="/admin">Quản trị hệ thống</Link>,
+                icon: <CrownOutlined />,
+              },
+            ]
+          : []),
+
+        { type: "divider" },
+
+        {
+          key: "logout",
+          label: "Đăng xuất",
+          icon: <LogoutOutlined />,
+          danger: true,
+        },
+      ];
 
   return (
     <>
@@ -116,24 +123,38 @@ export default function Header({ onSidebarClick, onLoginClick, onRegisterClick }
 
             {isLoggedIn ? (
               <Dropdown
-                menu={{ items: userMenuItems }}
+                menu={{
+                  items: userMenuItems,
+                  onClick: ({ key }) => {
+                    if (key === "profile") {
+                      router.push("/profile");
+                    }
+
+                    if (key === "logout") {
+                      logout();
+                    }
+                  },
+                }}
                 trigger={["click"]}
                 placement="bottomRight"
               >
-                <div className={styles.userInfo}>
-                  <Avatar src={user?.avatarUrl || user?.avatar} size={34} icon={<UserOutlined />} />
-                  <span className={styles.username}>
-                    {user?.name || user?.username}
-                  </span>
+                <div
+                  style={{
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <FontAwesomeIcon
+                    icon={faCircleUser}
+                    size="2x"
+                    color="#1DB954"
+                  />
                 </div>
               </Dropdown>
             ) : (
               <Space size={8}>
-                <Button
-                  type="primary"
-                  ghost
-                  onClick={onLoginClick}
-                >
+                <Button type="primary" ghost onClick={onLoginClick}>
                   Đăng nhập
                 </Button>
 

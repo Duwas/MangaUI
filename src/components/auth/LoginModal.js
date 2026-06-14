@@ -21,13 +21,10 @@ export default function LoginModal({ open, onClose, onSwitchToRegister }) {
     try {
       await login(values.email, values.password);
 
-      message.success("Đăng nhập thành công");
       form.resetFields();
       onClose();
     } catch (error) {
-      message.error(
-        error?.response?.data?.message || "Đăng nhập thất bại"
-      );
+      
     } finally {
       setLoading(false);
     }

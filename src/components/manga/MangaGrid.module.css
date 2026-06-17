@@ -1,0 +1,40 @@
+.section { margin-bottom: 40px; }
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+  padding-left: 14px;
+  position: relative;
+}
+.title::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 50%;
+  transform: translateY(-50%);
+  width: 4px; height: 22px;
+  background: var(--primary);
+  border-radius: 2px;
+}
+.viewAll {
+  font-size: 13px;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.viewAll:hover { color: var(--primary-light); }
+.skeleton {
+  background: var(--bg-surface);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}

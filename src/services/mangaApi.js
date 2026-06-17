@@ -1,12 +1,12 @@
 import axiosClient from "./axiosClient";
 
 const mangaApi = {
-  getApproved() {
-    return axiosClient.get("/mangas/approved");
+  getAll() {
+    return axiosClient.get("/mangas/all");
   },
 
-  getAll() {
-    return axiosClient.get("/mangas/All");
+  getApproved() {
+    return axiosClient.get("/mangas/approved");
   },
 
   getById(id) {
@@ -23,14 +23,6 @@ const mangaApi = {
 
   delete(id) {
     return axiosClient.delete(`/mangas/${id}`);
-  },
-
-  approve(id) {
-    return axiosClient.put(`/mangas/${id}/approve`);
-  },
-
-  reject(id) {
-    return axiosClient.put(`/mangas/${id}/reject`);
   },
 };
 

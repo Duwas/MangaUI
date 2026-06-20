@@ -1,0 +1,63 @@
+.wrapper {
+  background: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  border: 1px solid var(--border-color);
+}
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+.list {
+  display: flex;
+  flex-direction: column;
+  max-height: 500px;
+  overflow-y: auto;
+}
+.item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border-color);
+  text-decoration: none;
+  transition: background 0.15s;
+  cursor: pointer;
+}
+.item:hover {
+  background: var(--bg-surface-light);
+}
+.item:last-child { border-bottom: none; }
+.chapterNum {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary);
+  min-width: 100px;
+}
+.chapterTitle {
+  flex: 1;
+  font-size: 13px;
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.chapterMeta {
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+@media (max-width: 768px) {
+  .chapterTitle { display: none; }
+  .chapterMeta { gap: 8px; }
+}

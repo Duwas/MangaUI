@@ -1,16 +1,12 @@
 import axiosClient from "./axiosClient";
 
 const chapterApi = {
-  getAll() {
-    return axiosClient.get("/chapters");
-  },
-
-  getById(id) {
-    return axiosClient.get(`/chapters/${id}`);
-  },
-
   getByMangaId(mangaId) {
     return axiosClient.get(`/chapters/manga/${mangaId}`);
+  },
+
+  getById(chapterId) {
+    return axiosClient.get(`/chapters/${chapterId}`);
   },
 
   create(data) {

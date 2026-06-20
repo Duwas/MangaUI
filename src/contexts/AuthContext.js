@@ -6,25 +6,47 @@ import authApi from "@/services/authApi";
 
 const AuthContext = createContext(null);
 
+function isTokenExpired(token) {
+  try {
+    const payload = JSON.parse(atob(token.split(".")[1]));
+    const now = Date.now() / 1000;
+
+    return payload.exp < now;
+  } catch {
+    return true;
+  }
+}
+
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  const clearAuth = () => {
+    setUser(null);
+    setToken(null);
+
+    localStorage.removeItem("auth_user");
+    localStorage.removeItem("token");
+  };
+
   useEffect(() => {
     const savedUser = localStorage.getItem("auth_user");
     const savedToken = localStorage.getItem("token");
 
+    if (!savedToken || savedToken === "undefined" || isTokenExpired(savedToken)) {
+      clearAuth();
+      setIsLoading(false);
+      return;
+    }
+
     if (savedUser && savedUser !== "undefined") {
       try {
         setUser(JSON.parse(savedUser));
+        setToken(savedToken);
       } catch {
-        localStorage.removeItem("auth_user");
+        clearAuth();
       }
-    }
-
-    if (savedToken && savedToken !== "undefined") {
-      setToken(savedToken);
     }
 
     setIsLoading(false);
@@ -63,12 +85,7 @@ export function AuthProvider({ children }) {
   };
 
   const logout = () => {
-    setUser(null);
-    setToken(null);
-
-    localStorage.removeItem("auth_user");
-    localStorage.removeItem("token");
-
+    clearAuth();
     message.info("Đã đăng xuất");
   };
 

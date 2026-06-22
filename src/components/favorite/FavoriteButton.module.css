@@ -1,0 +1,17 @@
+.btn {
+  border-color: var(--border-color) !important;
+  color: var(--text-secondary) !important;
+  transition: all 0.3s !important;
+}
+.btn:hover {
+  color: #EF4444 !important;
+  border-color: #EF4444 !important;
+}
+.active {
+  color: #EF4444 !important;
+  border-color: #EF4444 !important;
+  background: rgba(239, 68, 68, 0.1) !important;
+}
+.active:hover {
+  background: rgba(239, 68, 68, 0.2) !important;
+}

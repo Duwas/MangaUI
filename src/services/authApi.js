@@ -12,6 +12,11 @@ const authApi = {
   getAllUsers() {
     return axiosClient.get("/auth/users");
   },
+  changeRole(id, role) {
+  return axiosClient.put(`/auth/users/${id}/role`, {
+    role,
+  });
+},
 };
 
 export default authApi;

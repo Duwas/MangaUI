@@ -5,11 +5,12 @@ import { UserOutlined, MailOutlined, EditOutlined, CrownOutlined } from '@ant-de
 import { useAuth } from '@/contexts/AuthContext';
 import { getRoleColor, getRoleText, formatDate } from '@/utils/helpers';
 import styles from './page.module.css';
-
+import authorRequestApi from "@/services/authorRequestApi";
 export default function ProfilePage() {
   const { user, updateProfile, isLoggedIn } = useAuth();
   const [editing, setEditing] = useState(false);
   const [form] = Form.useForm();
+  const [requestLoading, setRequestLoading] = useState(false);
 
   if (!isLoggedIn) {
     return (
@@ -22,7 +23,24 @@ export default function ProfilePage() {
       </div>
     );
   }
+  const handleAuthorRequest = async () => {
+  try {
+    setRequestLoading(true);
 
+    await authorRequestApi.create({
+      userId: user.id,
+      reason: "Tôi muốn trở thành tác giả để đăng truyện trên ComicWeb",
+    });
+
+    message.success("Đã gửi yêu cầu trở thành tác giả!");
+  } catch (error) {
+    message.error(
+      error?.response?.data?.message || "Gửi yêu cầu thất bại"
+    );
+  } finally {
+    setRequestLoading(false);
+  }
+};
   const handleSave = async (values) => {
     await updateProfile(values);
     setEditing(false);
@@ -110,8 +128,13 @@ export default function ProfilePage() {
                     ) : (
                       <div>
                         <p style={{ color: '#9CA3AF', marginBottom: 16 }}>Trở thành tác giả để đăng truyện trên ComicVerse</p>
-                        <Button type="primary" icon={<CrownOutlined />} size="large"
-                          onClick={() => message.success('Đã gửi yêu cầu trở thành tác giả!')}>
+                        <Button
+                          type="primary"
+                          icon={<CrownOutlined />}
+                          size="large"
+                          loading={requestLoading}
+                          onClick={handleAuthorRequest}
+                        >
                           Yêu cầu trở thành tác giả
                         </Button>
                       </div>

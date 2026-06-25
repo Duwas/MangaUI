@@ -1,0 +1,52 @@
+.layout {
+  min-height: 100vh;
+}
+.sider {
+  background: var(--bg-surface) !important;
+  border-right: 1px solid var(--border-color);
+  position: fixed !important;
+  left: 0; top: 7%; bottom: 0;
+  z-index: 100;
+  overflow: auto;
+  
+}
+.siderHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-color);
+}
+.adminIcon { font-size: 22px; color: #F59E0B; }
+.adminTitle { font-size: 16px; font-weight: 700; color: var(--text-primary); }
+.menu {
+  background: transparent !important;
+  border-right: none !important;
+  padding: 8px 0;
+}
+.content {
+  margin-left: 250px;
+  padding: 24px;
+  background: var(--bg-primary);
+  min-height: 100vh;
+}
+.backLink {
+  position: absolute;
+  bottom: 60px;
+  left: 0; right: 0;
+  padding: 12px 24px;
+  border-top: 1px solid var(--border-color);
+}
+.backLink a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.2s;
+}
+.backLink a:hover { color: var(--primary); }
+@media (max-width: 992px) {
+  .content { margin-left: 80px; }
+}

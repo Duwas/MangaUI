@@ -30,9 +30,6 @@ export default function AdminUsersPage() {
 
   const handleToggleActive = async (id) => {
     try {
-      // TODO: gọi API khóa/mở tài khoản
-      // await authApi.toggleActive(id);
-
       message.success("Đã cập nhật trạng thái!");
       fetchUsers();
     } catch (error) {

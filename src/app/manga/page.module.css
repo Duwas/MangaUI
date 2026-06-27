@@ -1,0 +1,9 @@
+.page { padding: 24px 0 40px; }
+.container { max-width: var(--container-max); margin: 0 auto; padding: 0 var(--container-padding); }
+.title { font-size: 28px; font-weight: 700; color: var(--text-primary); margin-bottom: 24px; }
+.filters { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+.resultCount { color: var(--text-secondary); font-size: 14px; margin-bottom: 20px; }
+@media (max-width: 768px) {
+  .title { font-size: 22px; }
+  .filters { flex-direction: column; }
+}

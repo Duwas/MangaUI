@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Modal, Form, Input, Button, Checkbox, Divider, message } from "antd";
+import { useRouter } from "next/navigation";
 import {
   MailOutlined,
   LockOutlined,
@@ -12,6 +13,7 @@ import { useAuth } from "@/contexts/AuthContext";
 
 export default function LoginModal({ open, onClose, onSwitchToRegister }) {
   const [form] = Form.useForm();
+  const [useRouter] = userRouter();
   const { login } = useAuth();
   const [loading, setLoading] = useState(false);
 
@@ -19,16 +21,26 @@ export default function LoginModal({ open, onClose, onSwitchToRegister }) {
     setLoading(true);
 
     try {
-      await login(values.email, values.password);
+      const loginData = await login(values.email, values.password);
+      const role = loginData?.user?.role;
 
       form.resetFields();
       onClose();
+
+      if (role === "ADMIN") {
+        router.push("/admin");
+      } else if (role === "AUTHOR") {
+        router.push("/author");
+      } else {
+        router.push("/");
+      }
     } catch (error) {
-      
+
     } finally {
       setLoading(false);
     }
   };
+
 
   return (
     <Modal

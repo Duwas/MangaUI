@@ -87,6 +87,7 @@ export function AuthProvider({ children }) {
   const logout = () => {
     clearAuth();
     message.info("Đã đăng xuất");
+    window.location.href = '/';
   };
 
   const updateProfile = async (data) => {

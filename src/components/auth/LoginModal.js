@@ -44,7 +44,7 @@ export default function LoginModal({ open, onClose, onSwitchToRegister }) {
       open={open}
       onCancel={onClose}
       footer={null}
-      width={420}
+      width={400}
       centered
       destroyOnHidden
     >

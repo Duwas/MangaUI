@@ -21,7 +21,7 @@ import styles from "./MangaDetail.module.css";
 
 const { Title, Paragraph } = Typography;
 
-export default function MangaDetail({ manga, firstChapterId }) {
+export default function MangaDetail({ manga, firstChapterId, latestChapterId }) {
   const categories = manga.categories || [];
 
   return (
@@ -117,10 +117,10 @@ export default function MangaDetail({ manga, firstChapterId }) {
                   </Button>
                 )}
 
-                {firstChapterId ? (
-                  <Link href={`/chapter/${firstChapterId}`}>
+                {latestChapterId ? (
+                  <Link href={`/chapter/${latestChapterId}`}>
                     <Button size="large" icon={<BookOutlined />}>
-                      Đọc Tiếp Chap {manga.chapterCount || 0}
+                      Đọc Mới Nhất
                     </Button>
                   </Link>
                 ) : (

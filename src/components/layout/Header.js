@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Button, Dropdown, Avatar, Drawer, Space, Input } from "antd";
+import { Button, Dropdown, Avatar, Drawer, Space, Input, AutoComplete } from "antd";
 import {
   MenuOutlined,
   SearchOutlined,
@@ -23,6 +23,7 @@ import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "@/contexts/AuthContext";
 import styles from "./Header.module.css";
 import { useRouter } from "next/navigation";
+import mangaApi from "@/services/mangaApi";
 
 const navItems = [
   { key: "/", label: "Trang Chủ", icon: <HomeOutlined /> },
@@ -36,6 +37,45 @@ export default function Header({ onSidebarClick, onLoginClick, onRegisterClick }
   const { user, isLoggedIn, logout } = useAuth();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [searchOptions, setSearchOptions] = useState([]);
+  const [allMangas, setAllMangas] = useState([]);
+
+  useEffect(() => {
+    if (searchOpen && allMangas.length === 0) {
+      mangaApi.getApproved().then((res) => {
+        setAllMangas(res.data || []);
+      }).catch(console.error);
+    }
+  }, [searchOpen, allMangas.length]);
+
+  const handleSearch = (value) => {
+    if (!value) {
+      setSearchOptions([]);
+      return;
+    }
+    const filtered = allMangas
+      .filter((m) => m.title?.toLowerCase().includes(value.toLowerCase()) || m.author?.toLowerCase().includes(value.toLowerCase()))
+      .slice(0, 5)
+      .map((m) => ({
+        value: m.title,
+        id: m.id,
+        label: (
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <img src={m.coverImage} alt={m.title} style={{ width: 30, height: 40, objectFit: "cover", borderRadius: 4 }} />
+            <div>
+              <div style={{ fontWeight: 500, color: "var(--text-primary)" }}>{m.title}</div>
+              <div style={{ fontSize: 12, color: "var(--text-secondary)" }}>{m.author}</div>
+            </div>
+          </div>
+        ),
+      }));
+    setSearchOptions(filtered);
+  };
+
+  const onSelect = (value, option) => {
+    setSearchOpen(false);
+    router.push(`/manga/${option.id}`);
+  };
 
   const role = user?.role?.toUpperCase();
 
@@ -186,17 +226,28 @@ export default function Header({ onSidebarClick, onLoginClick, onRegisterClick }
         {searchOpen && (
           <div className={styles.searchBar}>
             <div className={styles.container}>
-              <Input.Search
-                placeholder="Tìm kiếm truyện, tác giả..."
-                size="large"
-                autoFocus
-                onSearch={() => setSearchOpen(false)}
-                style={{
-                  maxWidth: 600,
-                  margin: "0 auto",
-                  display: "block",
-                }}
-              />
+              <AutoComplete
+                options={searchOptions}
+                onSearch={handleSearch}
+                onSelect={onSelect}
+                style={{ width: "100%", maxWidth: 600, margin: "0 auto", display: "block" }}
+                popupClassName={styles.searchDropdown}
+              >
+                <Input.Search
+                  placeholder="Tìm kiếm truyện, tác giả..."
+                  size="large"
+                  autoFocus
+                  onSearch={(val) => {
+                    setSearchOpen(false);
+                    if (val.trim()) {
+                      router.push(`/manga?q=${encodeURIComponent(val.trim())}`);
+                    }
+                  }}
+                  style={{
+                    display: "flex",
+                  }}
+                />
+              </AutoComplete>
             </div>
           </div>
         )}

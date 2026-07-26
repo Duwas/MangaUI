@@ -1,17 +1,52 @@
 'use client';
-import { use } from 'react';
+import { use, useEffect, useState } from 'react';
 import ChapterReader from '@/components/chapter/ChapterReader';
 import ErrorState from '@/components/common/ErrorState';
-import mockManga from '@/data/mockManga';
-import mockChapters, { getChapterById, getChaptersByMangaId } from '@/data/mockChapters';
+import chapterApi from '@/services/chapterApi';
+import mangaApi from '@/services/mangaApi';
+import { Spin } from 'antd';
 
 export default function ChapterPage({ params }) {
   const { id } = use(params);
-  const chapter = getChapterById(id);
-  if (!chapter) return <ErrorState message="Không tìm thấy chương này" />;
+  
+  const [chapter, setChapter] = useState(null);
+  const [manga, setManga] = useState(null);
+  const [chapters, setChapters] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
-  const manga = mockManga.find(m => m.id === chapter.mangaId);
-  const chapters = getChaptersByMangaId(chapter.mangaId);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        // 1. Get current chapter
+        const chapterRes = await chapterApi.getById(id);
+        const currentChapter = chapterRes.data;
+        setChapter(currentChapter);
+
+        // 2. Get manga and chapters list in parallel
+        const [mangaRes, chaptersRes] = await Promise.all([
+          mangaApi.getById(currentChapter.mangaId),
+          chapterApi.getByMangaId(currentChapter.mangaId)
+        ]);
+        
+        setManga(mangaRes.data);
+        setChapters(chaptersRes.data);
+      } catch (err) {
+        console.error(err);
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (id) {
+      fetchData();
+    }
+  }, [id]);
+
+  if (loading) return <div style={{ textAlign: 'center', padding: '50px' }}><Spin size="large" /></div>;
+  if (error || !chapter) return <ErrorState message="Không tìm thấy chương này" />;
 
   return <ChapterReader chapter={chapter} chapters={chapters} manga={manga} />;
 }

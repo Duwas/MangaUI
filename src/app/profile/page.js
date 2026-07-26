@@ -118,30 +118,26 @@ export default function ProfilePage() {
                   </div>
                 ),
               },
-              {
+              ...(user?.role?.toUpperCase() !== 'ADMIN' && user?.role?.toUpperCase() !== 'AUTHOR' ? [{
                 key: 'author',
                 label: 'Yêu cầu tác giả',
                 children: (
                   <div style={{ maxWidth: 500 }}>
-                    {user?.role === 'author' || user?.role === 'admin' ? (
-                      <Card><p style={{ color: '#1DB954' }}>✅ Bạn đã là {getRoleText(user?.role)}</p></Card>
-                    ) : (
-                      <div>
-                        <p style={{ color: '#9CA3AF', marginBottom: 16 }}>Trở thành tác giả để đăng truyện trên ComicVerse</p>
-                        <Button
-                          type="primary"
-                          icon={<CrownOutlined />}
-                          size="large"
-                          loading={requestLoading}
-                          onClick={handleAuthorRequest}
-                        >
-                          Yêu cầu trở thành tác giả
-                        </Button>
-                      </div>
-                    )}
+                    <div>
+                      <p style={{ color: '#9CA3AF', marginBottom: 16 }}>Trở thành tác giả để đăng truyện trên ComicVerse</p>
+                      <Button
+                        type="primary"
+                        icon={<CrownOutlined />}
+                        size="large"
+                        loading={requestLoading}
+                        onClick={handleAuthorRequest}
+                      >
+                        Yêu cầu trở thành tác giả
+                      </Button>
+                    </div>
                   </div>
                 ),
-              },
+              }] : []),
             ]}
           />
         </div>

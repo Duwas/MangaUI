@@ -10,9 +10,13 @@ import LoginModal from "@/components/auth/LoginModal";
 import RegisterModal from "@/components/auth/RegisterModal";
 import Footer from "./Footer";
 
+
+
+import ChatButton from "@/components/ai/ChatButton";
+import ChatWindow from "@/components/ai/ChatWindow";
 export default function AppLayout({ children }) {
   const [openSidebar, setOpenSidebar] = useState(false);
-
+  const [openChat,setOpenChat]=useState(false);
   const [openLogin, setOpenLogin] = useState(false);
   const [openRegister, setOpenRegister] = useState(false);
 
@@ -62,6 +66,14 @@ export default function AppLayout({ children }) {
           setOpenRegister(false);
           setOpenLogin(true);
         }}
+      />
+      <ChatButton
+        onClick={()=>setOpenChat(true)}
+      />
+
+      <ChatWindow
+        open={openChat}
+        onClose={()=>setOpenChat(false)}
       />
       <Footer />
     </>

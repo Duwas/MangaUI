@@ -21,14 +21,15 @@ export default function AuthorRequestTable({ requests = [], onApprove, onReject,
     {
       title: 'Trạng thái', dataIndex: 'status', key: 'status', width: 120,
       render: (s) => {
+        const statusKey = s ? s.toLowerCase() : '';
         const colors = { pending: 'orange', approved: 'green', rejected: 'red' };
         const texts = { pending: 'Chờ duyệt', approved: 'Đã duyệt', rejected: 'Từ chối' };
-        return <Tag color={colors[s]}>{texts[s]}</Tag>;
+        return <Tag color={colors[statusKey] || 'default'}>{texts[statusKey] || s}</Tag>;
       },
     },
     {
       title: 'Hành động', key: 'action', width: 160,
-      render: (_, record) => record.status === 'PENDING' ? (
+      render: (_, record) => record.status?.toUpperCase() === 'PENDING' ? (
         <Space size={4}>
           <Popconfirm title="Duyệt yêu cầu này?" onConfirm={() => onApprove?.(record.id)} okText="Duyệt" cancelText="Hủy">
             <Button type="primary" size="small" icon={<CheckOutlined />}>Duyệt</Button>

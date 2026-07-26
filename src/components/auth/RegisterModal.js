@@ -29,7 +29,7 @@ export default function RegisterModal({ open, onClose, onSwitchToLogin }) {
   };
 
   return (
-    <Modal open={open} onCancel={onClose} footer={null} width={420} centered destroyOnClose>
+    <Modal open={open} onCancel={onClose} footer={null} width={420} centered destroyOnHidden>
       <div style={{ textAlign: "center", marginBottom: 24 }}>
         <h2 style={{ color: "#fff", fontSize: 24, fontWeight: 700, margin: 0 }}>Đăng Ký</h2>
         <p style={{ color: "#9CA3AF", fontSize: 14, marginTop: 8 }}>Tạo tài khoản ComicVerse miễn phí</p>

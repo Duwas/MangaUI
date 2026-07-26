@@ -82,16 +82,28 @@ export default function ChapterReader({ chapter, chapters = [], manga }) {
         </div>
       </div>
 
-      <div className={styles.images} onClick={() => setShowNav((s) => !s)}>
-        {chapter.contentImages?.map((img, i) => (
-          <img
-            key={i}
-            src={img}
-            alt={`Trang ${i + 1}`}
-            className={styles.page}
-            loading="lazy"
-          />
-        ))}
+      <div className={styles.contentContainer} onClick={() => setShowNav((s) => !s)}>
+        {chapter.contentImages && chapter.contentImages.length > 0 ? (
+          <div className={styles.images}>
+            {chapter.contentImages.map((img, i) => (
+              <img
+                key={i}
+                src={img}
+                alt={`Trang ${i + 1}`}
+                className={styles.page}
+                loading="lazy"
+              />
+            ))}
+          </div>
+        ) : chapter.textContent ? (
+          <div className={styles.textContent}>
+            {chapter.textContent.split('\n').map((paragraph, idx) => (
+              <p key={idx}>{paragraph}</p>
+            ))}
+          </div>
+        ) : (
+          <div className={styles.emptyContent}>Nội dung đang được cập nhật...</div>
+        )}
       </div>
 
       <div className={styles.bottomNav}>

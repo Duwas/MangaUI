@@ -1,17 +1,28 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { Row, Col, Select, Input, Pagination, Spin } from "antd";
 import MangaCard from "@/components/manga/MangaCard";
 import mockCategories from "@/data/mockCategories";
 import mangaApi from "@/services/mangaApi";
+import { useSearchParams } from "next/navigation";
 import styles from "./page.module.css";
 
-export default function MangaListPage() {
+function MangaListContent() {
+  const searchParams = useSearchParams();
+  const initialSearch = searchParams.get("q") || "";
+
   const [mangas, setMangas] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(initialSearch);
+
+  useEffect(() => {
+    if (searchParams.get("q") !== null) {
+      setSearch(searchParams.get("q"));
+    }
+  }, [searchParams]);
+
   const [categoryFilter, setCategoryFilter] = useState(null);
   const [statusFilter, setStatusFilter] = useState(null);
   const [sortBy, setSortBy] = useState("updatedAt");
@@ -179,5 +190,19 @@ export default function MangaListPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function MangaListPage() {
+  return (
+    <Suspense fallback={
+      <div className={styles.page}>
+        <div className={styles.container} style={{ textAlign: "center", padding: "80px 0" }}>
+          <Spin size="large" />
+        </div>
+      </div>
+    }>
+      <MangaListContent />
+    </Suspense>
   );
 }

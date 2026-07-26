@@ -190,9 +190,16 @@ export default function AuthorMangasPage() {
     {
       title: "Hành động",
       key: "action",
-      width: 120,
+      width: 160,
       render: (_, rec) => (
         <Space size={4}>
+          <Button
+            type="primary"
+            size="small"
+            onClick={() => window.location.href = `/author/mangas/${rec.id}/chapters`}
+          >
+            Chương
+          </Button>
           <Button
             type="text"
             icon={<EditOutlined />}

@@ -72,9 +72,12 @@ export default function MangaDetailPage({ params }) {
     return <ErrorState message={error || "Không tìm thấy truyện này"} />;
   }
 
+  const firstChapterId = chapters.length > 0 ? chapters[chapters.length - 1].id : null;
+  const latestChapterId = chapters.length > 0 ? chapters[0].id : null;
+
   return (
     <div>
-      <MangaDetail manga={manga} />
+      <MangaDetail manga={manga} firstChapterId={firstChapterId} latestChapterId={latestChapterId} />
 
       <div
         style={{
